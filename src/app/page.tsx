@@ -1,7 +1,7 @@
 'use client'
 
 // import { useEffect } from 'react'
-import { Bell, CreditCard, DollarSign, HelpCircle, Home, Landmark, LogOut, Moon, PieChart, Plus, RefreshCw, Search, Send, Settings, User } from 'lucide-react'
+import { CircleUser, CreditCard, DollarSign, HelpCircle, Home, Landmark, LogOut, PieChart, RefreshCw, Search, Send, Settings, User } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -22,6 +22,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { ModeToggle } from '@/components/mode-toggle'
+import DebitCardComponent from '@/components/debit-card-component'
 // import { registerServiceWorker } from './sw-register'
 
 export default function Dashboard() {
@@ -32,7 +34,7 @@ export default function Dashboard() {
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
-      <aside className="w-64 bg-card p-6">
+      <aside className="w-64 bg-card p-6 hidden md:block">
         <div className="flex items-center mb-8 gap-4">
           <span className="text-2xl font-bold text-primary">iTech Artemis</span>
           <Landmark />
@@ -58,12 +60,11 @@ export default function Dashboard() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-semibold">Welcome to iTech Artemis</h1>
           <div className="flex items-center space-x-4">
-            <Button size="icon" variant="outline"><Moon size={20} /></Button>
-            <Button size="icon" variant="outline"><Bell size={20} /></Button>
+            <ModeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  {/* <img src="/placeholder.svg" alt="Profile" className="rounded-full" /> */}
+                <Button size='icon' variant="outline" className="relative h-10 w-10 rounded-full">
+                  <CircleUser size={24} />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
@@ -94,33 +95,14 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Debit Card Account */}
-          <Card className="col-span-2">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Debit Card Account</CardTitle>
-              <Button variant="ghost" size="sm"><RefreshCw size={16} /></Button>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-primary text-primary-foreground p-6 rounded-lg mb-4">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-sm">Fincard</span>
-                  <span className="text-sm">Platinum Debit</span>
-                </div>
-                <div className="text-2xl mb-4">4771 6080 1080 7889</div>
-                <div className="flex justify-between items-center">
-                  <span>Valid Thru 08/25</span>
-                  <span className="text-2xl">VISA</span>
-                </div>
-              </div>
-              <Button variant="outline"><Plus size={16} className="mr-2" /> Add Debit Card</Button>
-            </CardContent>
-          </Card>
+          <DebitCardComponent />
 
           {/* Total Balance */}
-          <Card>
+          <Card className='col-span-2 md:col-span-1 flex flex-col'>
             <CardHeader>
               <CardTitle>Your Total Balance</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className='mt-0 md:mt-12'>
               <div className="text-4xl font-bold mb-2">$ 80,201.50</div>
               <div className="text-sm text-muted-foreground">December 21, 2023 • 03:20 PM</div>
               <div className="flex space-x-2 mt-4">
@@ -206,12 +188,11 @@ export default function Dashboard() {
         {/* Invoice Activity */}
         <Card className="mt-8">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Invoice Activity</CardTitle>
+            <CardTitle className="hidden md:block text-sm font-medium">Invoice Activity</CardTitle>
             <div className="flex items-center space-x-2">
               <Input type="text" placeholder="Search..." className="w-[150px] sm:w-[250px]" />
               <Button size="sm"><Search size={16} /></Button>
               <Button size="sm">Filter</Button>
-              <Button size="sm">Export</Button>
             </div>
           </CardHeader>
           <CardContent>
